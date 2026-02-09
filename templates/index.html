@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Yajuneta</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: white;
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 40px;
+}
+
+header h1 {
+  margin-left: 3%;
+  font-size: 36px;
+}
+
+header .dev {
+  font-size: 14px;
+  text-align: right;
+}
+
+/* ===== MAIN ===== */
+.main {
+  padding: 80px;
+}
+
+/* ===== FORM ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.success {
+  margin-top: 10px;
+  background: #0f4d2f;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* ===== UPLOADS ===== */
+.uploads {
+  display: flex;
+  gap: 40px;
+}
+
+.upload-box {
+  width: 360px;
+  height: 140px;
+  border: 1px solid #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+
+.upload-box.dashed {
+  border: 1px dashed #666;
+}
+
+.upload-box:hover {
+  border-color: white;
+}
+
+.upload-box span {
+  font-size: 18px;
+}
+
+.upload-box small {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #2ecc71;
+}
+
+.upload-box input {
+  display: none;
+}
+
+/* ===== ACTIONS ===== */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+#status {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+button {
+  padding: 12px 32px;
+  font-size: 16px;
+  border: 2px solid white;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: #0a2cff;
+  border-color: #0a2cff;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== RESULT ===== */
+#resultado {
+  margin-top: 40px;
+  white-space: pre-wrap;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Yajuneta</h1>
+  <div class="dev">
+    Desarrollador<br>
+    <img src="logoyaju2.png" width= 20%><br>
+    
+    <a style="color: white;" href="mailito:julian@somosyaju.com" >Contacto</a><br>
+  </div>
+</header>
+
+<div class="main">
+
+<form id="form">
+
+  <div class="uploads">
+
+    <!-- PDF -->
+    <label class="upload-box">
+      <input type="file" name="pdf" accept=".pdf" required>
+      <span id="pdfText">+ Subir PDF</span>
+    </label>
+
+    <!-- EXCEL -->
+    <label class="upload-box dashed">
+      <input type="file" name="excel" accept=".xlsx" required>
+      <span id="excelText">+ Subir EXCEL</span>
+    </label>
+
+  </div>
+
+  <div class="actions">
+    <div id="status"></div>
+    <button type="submit" id="btn">Verificar</button>
+  </div>
+
+</form>
+
+<pre id="resultado"></pre>
+
+</div>
+
+<script>
+const form = document.getElementById("form");
+const resultado = document.getElementById("resultado");
+const status = document.getElementById("status");
+const btn = document.getElementById("btn");
+
+const pdfInput = form.querySelector('input[name="pdf"]');
+const excelInput = form.querySelector('input[name="excel"]');
+const pdfText = document.getElementById("pdfText");
+const excelText = document.getElementById("excelText");
+
+/* ===== FEEDBACK ARCHIVOS ===== */
+pdfInput.addEventListener("change", () => {
+  if (pdfInput.files.length) {
+    pdfText.innerHTML = `
+      ${pdfInput.files[0].name}
+      <div class="success">✔ Archivo subido correctamente</div>
+    `;
+  }
+});
+
+excelInput.addEventListener("change", () => {
+  if (excelInput.files.length) {
+    excelText.innerHTML = `
+      ${excelInput.files[0].name}
+      <div class="success">✔ Archivo subido correctamente</div>
+    `;
+  }
+});
+
+/* ===== SUBMIT ===== */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  resultado.textContent = "Analizando con IA...";
+ 
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("/check", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    resultado.textContent = data.ok
+      ? data.message
+      : "Error: " + data.error;
+
+  } catch {
+    resultado.textContent = "Error de conexión con el servidor";
+  }
+
+
+});
+</script>
+
+</body>
+</html>
