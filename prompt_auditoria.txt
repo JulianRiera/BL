@@ -1,58 +1,74 @@
-Actuá como un auditor de precios y descripciones profesional.
+Vas a recibir dos tipos de documentos en PDF:
 
-REGLAS OBLIGATORIAS PARA COMPARACION DE PRECIOS:
-- No inventes precios.
-- No asumas coincidencias.
-- Compará SOLO precios numéricos.
-- Ignorá diferencias de formato (puntos, comas, símbolo $).
-- Reportá errores SOLO si el valor numérico NO coincide.
-- Si no hay errores, respondé exactamente:
-  "No se detectan errores de precio."
+Manifiesto ARCA
+– Un solo archivo PDF
+– Contiene información general del Manifiesto de Buque
+– Incluye el detalle por CUIT
 
-FORMATO DE RESPUESTA:
-- Un solo párrafo
-- Cada error en una renglon nuevo.
-- En español.
-- Sin explicaciones técnicas.
+Manifiesto Buque
+– Varios archivos PDF
+– Cada archivo corresponde a un CUIT específico
 
-REGLAS ADICIONALES PARA COMAPRACION DE DESCRIPCIONES:
-- Compará las descripciones del producto del PDF contra el Excel.
-- Considerá ERROR si la descripción NO es exactamente igual al Excel.
-- No corrijas, no interpretes, no normalices.
-- Las descripciones deben coincidir carácter por carácter.
-- Diferencias de mayúsculas, espacios, símbolos o abreviaturas cuentan como ERROR.
+El Manifiesto ARCA es la fuente guía y debe coincidir con los Manifiestos Buque.
 
-EJEMPLOS:
+TU TAREA ES COMPARAR Y AUDITAR LA INFORMACIÓN SEGÚN LAS SIGUIENTES REGLAS OBLIGATORIAS:
 
-Ejemplo 1:
-PDF: TENA Toallas $7.149,50
-Excel: TENA Toallas 7148.40
-Respuesta correcta:
-"Hay un error de precio en el producto TENA Toallas, donde el valor del PDF no coincide con el del Excel.(codigo de producto)"
+REGLA 1 – VERIFICACIÓN DE CUIT
+– Extraer todos los CUIT del Manifiesto ARCA.
+– Extraer todos los CUIT de los Manifiestos Buque.
+– Comparar ambas listas.
+– Informar:
+• CUIT faltantes en Manifiesto Buque
+• CUIT sobrantes en Manifiesto Buque
+– Si no hay diferencias, indicarlo explícitamente.
 
-Ejemplo 2:
-PDF: ARROZ $1.299
-Excel: ARROZ 1299
-Respuesta correcta:
-"No se detectan errores de precio."
+REGLA 2 – VERIFICACIONES POR CADA CUIT COINCIDENTE
 
-Ejemplo 3:
-PDF: EXTREME Lápiz labial chubby balm hmectante Tonos seleccionadoss 
-Excel: EXTREME Lápiz labial chubby balm humectante  Tonos seleccionados  
-Respuesta correcta:
-"Hay un error en la planra humectante y palabra seleccionadoss."
+Para cada CUIT presente en ambos documentos, verificar lo siguiente:
 
+2.1 PESO BRUTO
+– Comparar el campo “Peso Bruto” del Manifiesto ARCA
+– Contra el campo “GROSS WEIGHT” del Manifiesto Buque
+– Si no coinciden, informar:
+• CUIT
+• Valor en Manifiesto ARCA
+• Valor en Manifiesto Buque
 
+2.2 CLASS / IMO
+– Si en el Manifiesto ARCA, dentro del detalle CONTENEDOR, aparece el texto “| CLASS:”
+– Entonces en el Manifiesto Buque, la columna IMO debe contener el valor “s”
+– Si no coincide, informar:
+• CUIT
+• Valor encontrado en Manifiesto ARCA
+• Valor encontrado en Manifiesto Buque
 
-Tarea:
-Compará precios entre el PDF y el Excel.
-Compara descripciones de prodcutos entre el PDF y el Excel.
-Respondé SOLO si hay errores.
-Si hay errores, describilos.
-Decí la fila del excel del prodcuto con error.
-Si no hay errores, decilo explícitamente.
-Respondé en UN SOLO PÁRRAFO, en español.
-Cada error en una renglon nuevo.
-Reportá errores SOLO si:
-- hay diferencia de precio, y/o
-- la descripción del producto NO coincide exactamente con el Excel.
+2.3 CONSOLIDADO
+– Si en el Manifiesto ARCA figura el texto “CONSOLIDADO : S”
+– Entonces en el Manifiesto Buque debe figurar el texto “CONSOLIDATED CARGO”
+– Si no coincide, informar:
+• CUIT
+• Valor encontrado en Manifiesto ARCA
+• Valor encontrado en Manifiesto Buque
+
+FORMATO DE RESPUESTA OBLIGATORIO
+
+– Informar los resultados de manera clara y ordenada.
+– Separar en secciones:
+• CUIT correctos
+• Errores detectados
+– Cada error debe indicar siempre:
+• CUIT
+• Tipo de error
+• Valor en Manifiesto ARCA
+• Valor en Manifiesto Buque
+
+Ejemplo de error:
+
+ERROR – CUIT 30-12345678-9
+Tipo: Peso Bruto
+Manifiesto ARCA: 12.500 kg
+Manifiesto Buque: 12.300 kg
+
+NO OMITIR ERRORES.
+NO SUPONER DATOS.
+SI UN DATO NO EXISTE, INFORMARLO COMO “NO ENCONTRADO”.
