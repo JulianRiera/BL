@@ -48,11 +48,11 @@ async def check(pdf: UploadFile = File(...), excel: UploadFile = File(...)):
         prompt = f"""
         {prompt_base}
 
-        PDF:
-        {texto_pdf}
+        PDF MANIFIESTO ARCA :
+        {pdf_text}
 
-        EXCEL:
-        {texto_excel}
+        PDF MANIFIESTO BUQUE:
+        {pdf_text}
         """
 
         # ---------- Llamada a la IA ----------
