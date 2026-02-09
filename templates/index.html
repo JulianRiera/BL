@@ -139,7 +139,7 @@ button:disabled {
 <body>
 
 <header>
-  <h1>Yajuneta</h1>
+  <h1>BL VERIFICADOR</h1>
   <div class="dev">
     Desarrollador<br>
     <img src="logoyaju2.png" width= 20%><br>
@@ -157,13 +157,13 @@ button:disabled {
     <!-- PDF -->
     <label class="upload-box">
       <input type="file" name="pdf" accept=".pdf" required>
-      <span id="pdfText">+ Subir PDF</span>
+      <span id="pdfText">+ Subir MARIFIESTO BUQUE</span>
     </label>
 
     <!-- EXCEL -->
     <label class="upload-box dashed">
-      <input type="file" name="excel" accept=".xlsx" required>
-      <span id="excelText">+ Subir EXCEL</span>
+      <input type="file" name="pdf" accept=".pdf" required>
+      <span id="pdfText">+ Subir MANIFIESTO ARCA</span>
     </label>
 
   </div>
@@ -200,10 +200,10 @@ pdfInput.addEventListener("change", () => {
   }
 });
 
-excelInput.addEventListener("change", () => {
-  if (excelInput.files.length) {
-    excelText.innerHTML = `
-      ${excelInput.files[0].name}
+pdfInput.addEventListener("change", () => {
+  if (pdfInput.files.length) {
+    pdfText.innerHTML = `
+      ${pdfInput.files[0].name}
       <div class="success">✔ Archivo subido correctamente</div>
     `;
   }
