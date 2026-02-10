@@ -161,9 +161,9 @@ button:disabled {
     </label>
 
     <!-- EXCEL -->
-    <label class="upload-box dashed">
+    <label class="upload-box">
       <input type="file" name="pdf" accept=".pdf" required>
-      <span id="pdfText">+ Subir MANIFIESTO ARCA</span>
+      <span id="pdfText2">+ Subir MANIFIESTO ARCA</span>
     </label>
 
   </div>
@@ -188,7 +188,7 @@ const btn = document.getElementById("btn");
 const pdfInput = form.querySelector('input[name="pdf"]');
 const excelInput = form.querySelector('input[name="excel"]');
 const pdfText = document.getElementById("pdfText");
-const excelText = document.getElementById("excelText");
+const pdfText2 = document.getElementById("pdfText2");
 
 /* ===== FEEDBACK ARCHIVOS ===== */
 pdfInput.addEventListener("change", () => {
@@ -199,6 +199,15 @@ pdfInput.addEventListener("change", () => {
     `;
   }
 });
+
+ pdfInput.addEventListener("change", () => {
+  if (pdfInput.files.length) {
+    pdfText2.innerHTML = `
+      ${pdfInput.files[0].name}
+      <div class="success">✔ Archivo subido correctamente</div>
+    `;
+  }
+}); 
 
 pdfInput.addEventListener("change", () => {
   if (pdfInput.files.length) {
@@ -240,3 +249,4 @@ form.addEventListener("submit", async (e) => {
 
 </body>
 </html>
+
