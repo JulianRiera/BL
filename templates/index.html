@@ -186,7 +186,7 @@ const status = document.getElementById("status");
 const btn = document.getElementById("btn");
 
 const pdfInput = form.querySelector('input[name="pdf"]');
-const excelInput = form.querySelector('input[name="excel"]');
+const pdfInput2 = form.querySelector('input[name="pdf"]');
 const pdfText = document.getElementById("pdfText");
 const pdfText2 = document.getElementById("pdfText2");
 
@@ -200,23 +200,14 @@ pdfInput.addEventListener("change", () => {
   }
 });
 
- pdfInput.addEventListener("change", () => {
-  if (pdfInput.files.length) {
+ pdfInput2.addEventListener("change", () => {
+  if (pdfInput2.files.length) {
     pdfText2.innerHTML = `
-      ${pdfInput.files[0].name}
+      ${pdfInput2.files[0].name}
       <div class="success">✔ Archivo subido correctamente</div>
     `;
   }
 }); 
-
-pdfInput.addEventListener("change", () => {
-  if (pdfInput.files.length) {
-    pdfText.innerHTML = `
-      ${pdfInput.files[0].name}
-      <div class="success">✔ Archivo subido correctamente</div>
-    `;
-  }
-});
 
 /* ===== SUBMIT ===== */
 form.addEventListener("submit", async (e) => {
