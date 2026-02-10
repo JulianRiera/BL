@@ -16,28 +16,19 @@ def index():
     with open("templates/index.html", "r", encoding="utf-8") as f:
         return f.read()
 
-
 @app.post("/check")
-async def check(pdf: UploadFile = File(...), excel: UploadFile = File(...)):
+async def check(pdf: UploadFile = File(...)):
     try:
         # ---------- Guardar archivos ----------
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as pdf_tmp:
             pdf_tmp.write(await pdf.read())
             pdf_path = pdf_tmp.name
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx") as xls_tmp:
-            xls_tmp.write(await excel.read())
-            excel_path = xls_tmp.name
-
         # ---------- Extraer texto del PDF ----------
         pdf_text = ""
         with pdfplumber.open(pdf_path) as pdf_file:
             for page in pdf_file.pages:
                 pdf_text += page.extract_text() + "\n"
-
-        # ---------- Leer Excel ----------
-        df = pd.read_excel(excel_path)
-        excel_text = df.to_string(index=False)
 
         # ---------- Prompt a la IA ----------
         def cargar_prompt(ruta="prompt_auditoria.txt"):
@@ -78,9 +69,9 @@ async def check(pdf: UploadFile = File(...), excel: UploadFile = File(...)):
     finally:
         try:
             os.remove(pdf_path)
-            os.remove(excel_path)
         except:
             pass
+
 
 
 
