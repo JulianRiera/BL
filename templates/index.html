@@ -203,7 +203,7 @@ pdfInput.addEventListener("change", () => {
  pdfInput2.addEventListener("change", () => {
   if (pdfInput2.files.length) {
     pdfText2.innerHTML = `
-      ${pdfInput2.files[0].name}
+      ${pdfInput2.files[1].name}
       <div class="success">✔ Archivo subido correctamente</div>
     `;
   }
@@ -240,4 +240,5 @@ form.addEventListener("submit", async (e) => {
 
 </body>
 </html>
+
 
